@@ -56,7 +56,6 @@ class FlipCardsViewController: UIViewController, UICollectionViewDataSource, UIC
     func shuffle () {
         var tempArrayOfImages = cartonImages
         cartonImages.removeAll()
-        
         while !tempArrayOfImages.isEmpty {
             let randomIndex  =  Int(arc4random_uniform(UInt32(tempArrayOfImages.count - 1)))
             let image = tempArrayOfImages.remove(at: randomIndex)
@@ -80,6 +79,52 @@ class FlipCardsViewController: UIViewController, UICollectionViewDataSource, UIC
         }
         
     }
+    
+//    selected.append(indexPath)
+//    switch selected.count {
+//    case 3:
+//    let cell1 = collectionView.cellForItem(at: selected[0]) as! CustomCollectionViewCell
+//    let cell2 = collectionView.cellForItem(at: selected[1]) as! CustomCollectionViewCell
+//    let cell3 = collectionView.cellForItem(at: selected[2]) as! CustomCollectionViewCell
+//    cell1.flipBack()
+//    cell2.flipBack()
+//
+//
+//    cell3.flipFront(image: game.pictureForCell(for: game.cards[selected[2].row]))
+//
+//    selected.remove(at: 0)
+//    selected.remove(at: 0)
+//
+//    case 2:
+//    if selected[0] == selected[1] {
+//    let cell = collectionView.cellForItem(at: selected[0]) as! CustomCollectionViewCell
+//    cell.flipBack()
+//    selected.removeAll()
+//
+//    } else {
+//    let card1 = game.cards[selected[0].row]
+//    let card2 = game.cards[selected[1].row]
+//    let cell1 = collectionView.cellForItem(at: selected[0]) as! CustomCollectionViewCell
+//    let cell2 = collectionView.cellForItem(at: selected[1]) as! CustomCollectionViewCell
+//    cell2.flipFront(image: game.pictureForCell(for: game.cards[selected[1].row]))
+//    // sleep(UInt32(1))
+//    if card1.identifier == card2.identifier {
+//    DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1), execute: {
+//    cell1.remove()
+//    cell2.remove()
+//    self.selected.removeAll()
+//    })
+//
+//
+//    }
+//
+//    }
+//
+//    default:
+//    let cell = collectionView.cellForItem(at: selected[0]) as! CustomCollectionViewCell
+//    cell.flipFront(image: game.pictureForCell(for: game.cards[selected[0].row]))
+//    // let cell = collectionView.cellForItem(at: indexPath) as! CustomCollectionViewCell
+//    //cell.flipFront( image: UIImage (named: String(indexPath.row+1))!)
     override func viewDidLoad() {
         super.viewDidLoad()
         shuffle()
