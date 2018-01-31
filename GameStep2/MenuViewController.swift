@@ -17,8 +17,8 @@ class MenuViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
     
     typealias Level = ( name:String, cards: [Int])
     var levels : [Level] =  [("Easy", [2,4,6,8]),
-                             ("Normal", [12,14,16,18]),
-                             ("Hard", [22,24,26,28])]
+                             ("Normal", [12,16,20,24]),
+                             ("Hard", [28,30,32,36])]
     
     let complexityOFGame = ["Easy","Normal","Hard"]
     let numberOfCards = ["4","6","8","12","16","20","24","26","28","32","36","40"]
@@ -36,6 +36,7 @@ class MenuViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
     // override перевизначає функцію з якогось протоколу
     override func prepare(for segue: UIStoryboardSegue, sender: Any?){
         //  as! FlipCardsViewController куди ми будемо передавати
+        // if  write destination.view - it innitsialization all variaebles in next controller
         let temporaryVariableOfPicker = segue.destination as! FlipCardsViewController
         //тут ми вказуємо що ми змінну з нашого контроллера передаємо в іншу змінну в наступному контороллері
         temporaryVariableOfPicker.getCardNumbers = numberOfCardsFromPicker
@@ -54,16 +55,8 @@ class MenuViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
             let level = levels[component]
             return level.cards.count
         default:
-            assertionFailure("Don't return count of components in drum.")
-            fatalError()
+            fatalError("Don't return count of components in drum.")
         }
-        //        if component == 0 {
-        //            return levels.count
-        //        } else {
-        //            let level = levels[component]
-        //            return level.cards.count
-        //        }
-        // return 1000
     }
     
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
@@ -83,17 +76,6 @@ class MenuViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
             assertionFailure("It is don't chosen any picker drum.")
         }
         
-        //        if component == chosenDrum.Levels.rawValue {
-        //            let level = levels[row]
-        //            numberInPicker.text = level.name
-        //        } else {
-        //            let index = pickerView.selectedRow(inComponent: 0)
-        //            let level = levels[index]
-        //            let card = level.cards[row]
-        //            numberInPicker.text = "\(card)"//String(card)
-        //            numberOfCardsFromPicker = level.cards[row]
-        //        }
-        //  numberInPicker.text = numberOfCards[row % numberOfCards.count]
         numberInPicker.frame = CGRect(x: 0, y: 0, width: pickerView.frame.width, height: 50)
         numberInPicker.font = UIFont.boldSystemFont(ofSize: 30)
         numberInPicker.textAlignment = .center

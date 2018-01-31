@@ -62,14 +62,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" alpha="0.94999999999999996" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="backgroundview" translatesAutoresizingMaskIntoConstraints="NO" id="6On-9W-Vc3">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="4Ip-RS-vlC">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" red="1" green="0.85101647130000002" blue="0.64150417029999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="B70-rt-gQf">
                                     <size key="itemSize" width="67" height="67"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -105,27 +101,40 @@
                                     <outlet property="delegate" destination="6CZ-TQ-3Hg" id="27t-Xr-1iA"/>
                                 </connections>
                             </collectionView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cji-xM-NRU">
-                                <rect key="frame" x="114" y="616" width="147" height="51"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                <state key="normal" title="Result"/>
-                                <connections>
-                                    <action selector="ResultButton:" destination="6CZ-TQ-3Hg" eventType="touchUpInside" id="jQA-p0-xYc"/>
-                                </connections>
-                            </button>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PPc-MI-1jf">
+                                <rect key="frame" x="0.0" y="579" width="375" height="44"/>
+                                <items>
+                                    <barButtonItem title="Item" image="refresh button" id="Ndu-g7-Tic">
+                                        <connections>
+                                            <action selector="reloadItem:" destination="6CZ-TQ-3Hg" id="oR0-e1-mDa"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem title="Item" id="oxq-K4-e5I"/>
+                                    <barButtonItem title="Item" id="oS2-FX-Yft"/>
+                                </items>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="PPc-MI-1jf" firstAttribute="trailing" secondItem="O0v-YD-d8h" secondAttribute="trailing" id="A2n-bi-HIC"/>
+                            <constraint firstItem="PPc-MI-1jf" firstAttribute="bottom" secondItem="O0v-YD-d8h" secondAttribute="bottom" id="PmY-1M-rtB"/>
+                            <constraint firstItem="PPc-MI-1jf" firstAttribute="bottom" secondItem="O0v-YD-d8h" secondAttribute="bottom" id="v8S-QF-o8Y"/>
+                            <constraint firstItem="PPc-MI-1jf" firstAttribute="leading" secondItem="O0v-YD-d8h" secondAttribute="leading" id="xsL-pQ-gkW"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="O0v-YD-d8h"/>
                     </view>
+                    <toolbarItems/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="collectionView" destination="4Ip-RS-vlC" id="NwB-ym-9Lc"/>
+                        <outlet property="flipsCount" destination="oxq-K4-e5I" id="1u1-Qe-Q2Q"/>
+                        <outlet property="timerItem" destination="oS2-FX-Yft" id="c14-wZ-sdI"/>
                         <segue destination="pZA-Hs-G6R" kind="show" identifier="ArrowToResult" id="Td6-6B-exa"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aCe-xI-WJs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="644" y="-4.9475262368815596"/>
+            <point key="canvasLocation" x="642.39999999999998" y="-5.8470764617691158"/>
         </scene>
         <!--RESULT-->
         <scene sceneID="0Q2-3a-5K6">
@@ -171,5 +180,6 @@
     </scenes>
     <resources>
         <image name="backgroundview" width="1200" height="2598"/>
+        <image name="refresh button" width="30" height="30"/>
     </resources>
 </document>
