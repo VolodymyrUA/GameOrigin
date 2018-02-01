@@ -13,8 +13,9 @@
 		1B24F3B12007967800FA5EC9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1B24F3AF2007967800FA5EC9 /* LaunchScreen.storyboard */; };
 		1B24F3B9200796BA00FA5EC9 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B24F3B8200796BA00FA5EC9 /* MenuViewController.swift */; };
 		1B24F3BB2007980700FA5EC9 /* FlipCardsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B24F3BA2007980700FA5EC9 /* FlipCardsViewController.swift */; };
-		1B24F3BD20079A1100FA5EC9 /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B24F3BC20079A1100FA5EC9 /* ResultViewController.swift */; };
 		1B24F3C020079DB400FA5EC9 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B24F3BF20079DB400FA5EC9 /* CollectionViewCell.swift */; };
+		1B4A3F132022125A00CEB953 /* GameModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1B4A3F112022125A00CEB953 /* GameModel.xcdatamodeld */; };
+		1B7B63D9202355EA0064AE93 /* RecordsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7B63D8202355EA0064AE93 /* RecordsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,8 +27,9 @@
 		1B24F3B22007967800FA5EC9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1B24F3B8200796BA00FA5EC9 /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		1B24F3BA2007980700FA5EC9 /* FlipCardsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlipCardsViewController.swift; sourceTree = "<group>"; };
-		1B24F3BC20079A1100FA5EC9 /* ResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
 		1B24F3BF20079DB400FA5EC9 /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
+		1B4A3F122022125A00CEB953 /* GameModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = GameModel.xcdatamodel; sourceTree = "<group>"; };
+		1B7B63D8202355EA0064AE93 /* RecordsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,9 +65,9 @@
 				1B24F3BE20079A4100FA5EC9 /* Suporting Files */,
 				1B24F3B8200796BA00FA5EC9 /* MenuViewController.swift */,
 				1B24F3BA2007980700FA5EC9 /* FlipCardsViewController.swift */,
-				1B24F3BC20079A1100FA5EC9 /* ResultViewController.swift */,
 				1B24F3AA2007967800FA5EC9 /* Main.storyboard */,
 				1B24F3BF20079DB400FA5EC9 /* CollectionViewCell.swift */,
+				1B7B63D8202355EA0064AE93 /* RecordsViewController.swift */,
 				1B24F3B22007967800FA5EC9 /* Info.plist */,
 			);
 			path = GameStep2;
@@ -77,6 +79,7 @@
 				1B24F3A62007967800FA5EC9 /* AppDelegate.swift */,
 				1B24F3AD2007967800FA5EC9 /* Assets.xcassets */,
 				1B24F3AF2007967800FA5EC9 /* LaunchScreen.storyboard */,
+				1B4A3F112022125A00CEB953 /* GameModel.xcdatamodeld */,
 			);
 			path = "Suporting Files";
 			sourceTree = "<group>";
@@ -154,10 +157,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				1B24F3C020079DB400FA5EC9 /* CollectionViewCell.swift in Sources */,
+				1B4A3F132022125A00CEB953 /* GameModel.xcdatamodeld in Sources */,
 				1B24F3BB2007980700FA5EC9 /* FlipCardsViewController.swift in Sources */,
 				1B24F3A72007967800FA5EC9 /* AppDelegate.swift in Sources */,
 				1B24F3B9200796BA00FA5EC9 /* MenuViewController.swift in Sources */,
-				1B24F3BD20079A1100FA5EC9 /* ResultViewController.swift in Sources */,
+				1B7B63D9202355EA0064AE93 /* RecordsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -342,6 +346,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		1B4A3F112022125A00CEB953 /* GameModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				1B4A3F122022125A00CEB953 /* GameModel.xcdatamodel */,
+			);
+			currentVersion = 1B4A3F122022125A00CEB953 /* GameModel.xcdatamodel */;
+			path = GameModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 1B24F39B2007967800FA5EC9 /* Project object */;
 }

@@ -23,10 +23,10 @@ class FlipCardsViewController: UIViewController, UICollectionViewDataSource, UIC
     var getCardNumbers = 6
     var cellOfIndex:[IndexPath] = []
     var selectedIndex: IndexPath?
-    
-    var counter = 0.0 {
+    var cardCounter = 0
+    var timerCounter = 0 {
         didSet {
-            timerItem.title = "Timer: \(counter)"
+            timerItem.title = "Time: \(timerCounter)"
         }
     }
     var timer = Timer()
@@ -40,9 +40,7 @@ class FlipCardsViewController: UIViewController, UICollectionViewDataSource, UIC
     @IBAction func reloadItem(_ sender: UIBarButtonItem) {
         newGame()
     }
-    
-   
-    
+
     var cartonImages : [UIImage] = [
         UIImage (named: "0")!,
         UIImage (named: "1")!,
@@ -164,7 +162,7 @@ class FlipCardsViewController: UIViewController, UICollectionViewDataSource, UIC
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         flips += 1
-        flipsCount.title = "\(flips)"
+        flipsCount.title = "Flip:\(flips)"
         if selectedIndex == nil {
             let cell = collectionView.cellForItem(at: indexPath) as! CollectionViewCell
             cell.flip(picture: cartonImages[indexPath.row])// image wich we chouse now
@@ -175,6 +173,7 @@ class FlipCardsViewController: UIViewController, UICollectionViewDataSource, UIC
                 { // the same is selected
                 let cell = collectionView.cellForItem(at: indexPath) as! CollectionViewCell
                 cell.flip(picture: UIImage (named: "background2")!)
+                    
                 //                self.selectedIndex = nil
                 //self.cardsCollection.isUserInteractionEnabled = false
             } else if self.cartonImages[indexPath.row] ==  self.cartonImages[(self.selectedIndex!.row)]
@@ -186,7 +185,11 @@ class FlipCardsViewController: UIViewController, UICollectionViewDataSource, UIC
                     let cell2 = collectionView.cellForItem(at: self.selectedIndex!) as! CollectionViewCell
                     cell1.remove()
                     cell2.remove()
-
+                    cardCounter += 2
+                    if (cardCounter == getCardNumbers) {
+                        allertGameDone()
+                        stopTimer()
+                    }
               //  })
             } else
                 {// if cellidendendefier is different
@@ -236,22 +239,53 @@ class FlipCardsViewController: UIViewController, UICollectionViewDataSource, UIC
     
     //FIXME:- Timer
     func runTimer() {
-        timer = Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: (#selector(UpdateTimer)), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: (#selector(UpdateTimer)), userInfo: nil, repeats: true)
     }
     
   @objc func UpdateTimer() {
-        counter += 0.2
+        timerCounter += 1
     }
     
     // for reload game
     func newGame() {
-
         shuffle()
         oddArrayOfImages()
-        counter = 0.0
+        
+        flips = 0
+        flipsCount.title = "Flip:\(flips)"
+        timerCounter = 0
         //relload cell 
         collectionView.reloadData()
+        runTimer()
     }
+    //---- timer stops
+    func stopTimer() -> Int {
+        timer.invalidate()
+        return timerCounter
+    }
+    
+    //--- allert
+    
+    func allertGameDone() {
+    let alert = UIAlertController(title: "Do you want save your score?", message: "It will be saved in records.", preferredStyle: .alert)
+    
+    alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
+    alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
+    self.present(alert, animated: true)
+       
+    }
+//--send variables in recordscontroller
+    var segueData = (timer:0, flips:0, level:0, userName:"user")
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?){
+        //  as! FlipCardsViewController куди ми будемо передавати
+        // if  write destination.view - it innitsialization all variaebles in next controller
+        let recordsSegue = segue.destination as! RecordsViewController
+        //тут ми вказуємо що ми змінну з нашого контроллера передаємо в іншу змінну в наступному контороллері
+        recordsSegue.variablesForData = segueData as! (time: Int, flips: Int, level: Int, gamerName: String)
+    }
+    
+    
+    
     override var prefersStatusBarHidden: Bool{
         return true
     }

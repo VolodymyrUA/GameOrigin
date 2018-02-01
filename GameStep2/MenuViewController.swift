@@ -33,6 +33,9 @@ class MenuViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         numberOfCardsFromPicker = 6
     }
     
+    
+    
+    
     // override перевизначає функцію з якогось протоколу
     override func prepare(for segue: UIStoryboardSegue, sender: Any?){
         //  as! FlipCardsViewController куди ми будемо передавати
