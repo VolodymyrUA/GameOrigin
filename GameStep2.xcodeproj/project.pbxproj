@@ -16,6 +16,7 @@
 		1B24F3C020079DB400FA5EC9 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B24F3BF20079DB400FA5EC9 /* CollectionViewCell.swift */; };
 		1B4A3F132022125A00CEB953 /* GameModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1B4A3F112022125A00CEB953 /* GameModel.xcdatamodeld */; };
 		1B7B63D9202355EA0064AE93 /* RecordsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7B63D8202355EA0064AE93 /* RecordsViewController.swift */; };
+		1B7B63DB202451A30064AE93 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7B63DA202451A30064AE93 /* TableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		1B24F3BF20079DB400FA5EC9 /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 		1B4A3F122022125A00CEB953 /* GameModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = GameModel.xcdatamodel; sourceTree = "<group>"; };
 		1B7B63D8202355EA0064AE93 /* RecordsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordsViewController.swift; sourceTree = "<group>"; };
+		1B7B63DA202451A30064AE93 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,7 +49,6 @@
 			isa = PBXGroup;
 			children = (
 				1B24F3A52007967800FA5EC9 /* GameStep2 */,
-				1B24F3A42007967800FA5EC9 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
@@ -57,6 +58,7 @@
 				1B24F3A32007967800FA5EC9 /* GameStep2.app */,
 			);
 			name = Products;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		1B24F3A52007967800FA5EC9 /* GameStep2 */ = {
@@ -66,9 +68,11 @@
 				1B24F3B8200796BA00FA5EC9 /* MenuViewController.swift */,
 				1B24F3BA2007980700FA5EC9 /* FlipCardsViewController.swift */,
 				1B24F3AA2007967800FA5EC9 /* Main.storyboard */,
+				1B7B63DA202451A30064AE93 /* TableViewCell.swift */,
 				1B24F3BF20079DB400FA5EC9 /* CollectionViewCell.swift */,
 				1B7B63D8202355EA0064AE93 /* RecordsViewController.swift */,
 				1B24F3B22007967800FA5EC9 /* Info.plist */,
+				1B24F3A42007967800FA5EC9 /* Products */,
 			);
 			path = GameStep2;
 			sourceTree = "<group>";
@@ -161,6 +165,7 @@
 				1B24F3BB2007980700FA5EC9 /* FlipCardsViewController.swift in Sources */,
 				1B24F3A72007967800FA5EC9 /* AppDelegate.swift in Sources */,
 				1B24F3B9200796BA00FA5EC9 /* MenuViewController.swift in Sources */,
+				1B7B63DB202451A30064AE93 /* TableViewCell.swift in Sources */,
 				1B7B63D9202355EA0064AE93 /* RecordsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -302,7 +307,7 @@
 				DEVELOPMENT_TEAM = 3W6QZF2EK2;
 				INFOPLIST_FILE = GameStep2/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = ExportProfile.developerprofile.trying.GameStep1;
+				PRODUCT_BUNDLE_IDENTIFIER = ExportProfile.developerprofile.trying.GameStep2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -317,7 +322,7 @@
 				DEVELOPMENT_TEAM = 3W6QZF2EK2;
 				INFOPLIST_FILE = GameStep2/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = ExportProfile.developerprofile.trying.GameStep1;
+				PRODUCT_BUNDLE_IDENTIFIER = ExportProfile.developerprofile.trying.GameStep2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

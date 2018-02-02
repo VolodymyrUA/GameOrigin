@@ -10,29 +10,32 @@ import UIKit
 import CoreData
 
 class RecordsViewController: UIViewController {
-
+    
+    
+    
+    
+    var temporyFlip = 0
     var variablesForData = ( time:0, flips:0, level:0, gamerName:"User")
     
     var results: [NSManagedObject]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        
     }
+    
     
     //--------------------------DataBase
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
         let managedContext = appDelegate.persistentContainer.viewContext
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "GameModel") // назва твоєї схеми (Entity)
-
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Scores") //
         do {
             results = try managedContext.fetch(fetchRequest)
         } catch let err as NSError {
@@ -44,30 +47,28 @@ class RecordsViewController: UIViewController {
         } catch let err as NSError {
             print("Failed to fetch items", err)
         }
-
-
     }
-
+    
     func saveNewResult() {
-    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
-    let context = appDelegate.persistentContainer.viewContext
-    // передаємо змінні які ми хочемо зберегти в базу
-    let newResult = NSEntityDescription.insertNewObject(forEntityName: "GameModel", into: context) // назва схеми
-
-   // newResult.setValue(cardsNumberFromGameController, forKey: "level") // тут жовтим атрибути в твоїй схемі
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
+        let context = appDelegate.persistentContainer.viewContext
+        // variables wich we pass in DB
+        let newResult = NSEntityDescription.insertNewObject(forEntityName: "Scores", into: context) // name of schame
+        
+        // newResult.setValue(cardsNumberFromGameController, forKey: "level") // тут жовтим атрибути в твоїй схемі
         newResult.setValue(variablesForData.flips, forKey: "flipCount")
         newResult.setValue(variablesForData.time, forKey: "time")
         newResult.setValue(variablesForData.level, forKey: "level")
-        newResult.setValue(variablesForData.gamerName, forKey: "time")
-
-    do {
-    try context.save()
-    results.append(newResult)
-    } catch {
-    print("error")
+        newResult.setValue(variablesForData.gamerName, forKey: "name")
+        
+        do {
+            try context.save()
+            results.append(newResult)
+        } catch {
+            print("error")
+        }
     }
-    }
-   //--------------------end DataBase
+    //--------------------end DataBase
     
     // ---shring
     @objc func shareResults(){
@@ -85,16 +86,6 @@ class RecordsViewController: UIViewController {
         let screenshot = UIGraphicsGetImageFromCurrentImageContext()
         return screenshot
     }
-    // ----end of sharing
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+    
+    
 }

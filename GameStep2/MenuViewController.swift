@@ -1,15 +1,9 @@
-//
-//  MenuViewController.swift
-//  GameStep2
-//
-//  Created by Володимир Смульський on 1/11/18.
-//  Copyright © 2018 Володимир Смульський. All rights reserved.
-//
 
 import UIKit
 
 class MenuViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
+    //
     enum chosenDrum: Int {
         case Levels = 0
         case Cards = 1
@@ -25,6 +19,10 @@ class MenuViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
     //FIXME: - WRITE INIT FOR THIS
     var numberOfCardsFromPicker:Int = 0
     
+    @IBAction func recordsItem(_ sender: Any) {
+        performSegue(withIdentifier: "ArrowToRecords", sender: self)
+    }
+    
     @IBOutlet weak var pickerView: UIPickerView!
     
     @IBAction func playButton(_ sender: UIButton) {
@@ -35,14 +33,15 @@ class MenuViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
     
     
     
-    
     // override перевизначає функцію з якогось протоколу
     override func prepare(for segue: UIStoryboardSegue, sender: Any?){
-        //  as! FlipCardsViewController куди ми будемо передавати
-        // if  write destination.view - it innitsialization all variaebles in next controller
-        let temporaryVariableOfPicker = segue.destination as! FlipCardsViewController
-        //тут ми вказуємо що ми змінну з нашого контроллера передаємо в іншу змінну в наступному контороллері
-        temporaryVariableOfPicker.getCardNumbers = numberOfCardsFromPicker
+        if segue.identifier == "ArrowToRecords" {
+            let variableForRecords = segue.destination as! RecordsViewController
+            variableForRecords.temporyFlip = numberOfCardsFromPicker
+        }
+        if segue.identifier == "ArrowNumberOfCards" { let temporaryVariableOfPicker = segue.destination as! FlipCardsViewController
+            temporaryVariableOfPicker.getCardNumbers = numberOfCardsFromPicker
+        }
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -64,7 +63,6 @@ class MenuViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
     
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
         let numberInPicker = UILabel()
-        
         switch component {
         case chosenDrum.Levels.rawValue:
             let level = levels[row]
@@ -78,7 +76,6 @@ class MenuViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         default:
             assertionFailure("It is don't chosen any picker drum.")
         }
-        
         numberInPicker.frame = CGRect(x: 0, y: 0, width: pickerView.frame.width, height: 50)
         numberInPicker.font = UIFont.boldSystemFont(ofSize: 30)
         numberInPicker.textAlignment = .center
@@ -106,9 +103,6 @@ class MenuViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(10)) {
-        //            self.pickerView.selectRow(1000/2, inComponent: 0, animated: false)
-        //        }
         numberOfCardsFromPicker = 28
     }
     

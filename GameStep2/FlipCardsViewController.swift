@@ -1,24 +1,11 @@
-//
-//  FlipCardsViewController.swift
-//  GameStep2
-//
-//  Created by Володимир Смульський on 1/11/18.
-//  Copyright © 2018 Володимир Смульський. All rights reserved.
-//
 
 import UIKit
+import CoreData
 
 class FlipCardsViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout  {
     
-   
-    
-//    @IBAction func ResultButton(_ sender: Any) {
-//        performSegue(withIdentifier: "ArrowToResult", sender: self)
-//    }
-    
     @IBOutlet weak var collectionView: UICollectionView!
     
-    // fix this by get and set
     var flips = 0
     var getCardNumbers = 6
     var cellOfIndex:[IndexPath] = []
@@ -32,15 +19,18 @@ class FlipCardsViewController: UIViewController, UICollectionViewDataSource, UIC
     var timer = Timer()
     var timerIsRuning = false
     
-    
     @IBOutlet weak var flipsCount: UIBarButtonItem!
     
     @IBOutlet weak var timerItem: UIBarButtonItem!
     
-    @IBAction func reloadItem(_ sender: UIBarButtonItem) {
-        newGame()
+    @IBAction func pauseItem(_ sender: Any) {
+        pause()
     }
-
+    
+    @IBAction func reloadItem(_ sender: UIBarButtonItem) {
+        reloadGame()
+    }
+    
     var cartonImages : [UIImage] = [
         UIImage (named: "0")!,
         UIImage (named: "1")!,
@@ -73,7 +63,7 @@ class FlipCardsViewController: UIViewController, UICollectionViewDataSource, UIC
         UIImage (named: "29")!,
         UIImage (named: "30")!,
         ]
-    
+    //MARK: Shuffle cards
     func shuffle () {
         var tempArrayOfImages = cartonImages
         cartonImages.removeAll()
@@ -98,40 +88,28 @@ class FlipCardsViewController: UIViewController, UICollectionViewDataSource, UIC
             let image = unshuffled.remove(at: randomIndex)
             cartonImages.append(image)
         }
-        
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         shuffle()
         oddArrayOfImages()
-        
         flipsCount.title = "0"
         runTimer()
         UpdateTimer()
         
-        
         let rightButton = UIBarButtonItem(image: #imageLiteral(resourceName: "share"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(self.shareResults))
         self.navigationItem.rightBarButtonItem = rightButton
-        // Do any additional setup after loading the view.
     }
     
-    // кількість карток в рядку
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return getCardNumbers
     }
-    //FIXME - відступи  для селів
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-//
-//        return UIEdgeInsets(top: <#T##CGFloat#>, left: <#T##CGFloat#>, bottom: <#T##CGFloat#>, right: <#T##CGFloat#>)
-//    }
-//
-    // промальвуємо cell в collectionView
     
-    //FIXME - розтягує картинки
-//    func  collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        return CGSize(width: <#T##Double#>, height: <#T##Double#>)
-//    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        showAllert()
+    }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         // змінна в яку будемо кидати картинки
@@ -139,27 +117,9 @@ class FlipCardsViewController: UIViewController, UICollectionViewDataSource, UIC
         // селі ми присвоюємо картинку  (indexPath.row - індекс картинки )(тобто беремо
         cell.ImageInCell.image = UIImage(named: "background")
         return cell
-        
     }
     
-//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        switch selectedIndex {
-//        case nil :
-//            let cell = collectionView.cellForItem(at: indexPath) as! CollectionViewCell
-//            cell.flip(picture: cartonImages[indexPath.row])// image wich we chouse now
-//            selectedIndex = indexPath
-//        case indexPath? :
-//            let cell = collectionView.cellForItem(at: indexPath) as! CollectionViewCell
-//            cell.flip(picture: UIImage (named: "background2")!)
-//            self.selectedIndex = nil
-//        default:
-//            break
-//        }
-//
-//    }
-    
-    
-    
+    //Mark: Game Logic
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         flips += 1
         flipsCount.title = "Flip:\(flips)"
@@ -168,57 +128,44 @@ class FlipCardsViewController: UIViewController, UICollectionViewDataSource, UIC
             cell.flip(picture: cartonImages[indexPath.row])// image wich we chouse now
             selectedIndex = indexPath
         } else
-                {// two is chossen
+        {// two is chossen
             if self.selectedIndex == indexPath
-                { // the same is selected
+            { // the same is selected
                 let cell = collectionView.cellForItem(at: indexPath) as! CollectionViewCell
-                cell.flip(picture: UIImage (named: "background2")!)
-                    
-                //                self.selectedIndex = nil
-                //self.cardsCollection.isUserInteractionEnabled = false
-            } else if self.cartonImages[indexPath.row] ==  self.cartonImages[(self.selectedIndex!.row)]
-                {
+                cell.flip(picture: UIImage (named: "background2")!)} else if self.cartonImages[indexPath.row] ==  self.cartonImages[(self.selectedIndex!.row)] {
                 let cell = collectionView.cellForItem(at: indexPath) as! CollectionViewCell
                 cell.flip(picture: self.cartonImages[(indexPath.row)])
-             //   DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1), execute: {
-                    let cell1 = collectionView.cellForItem(at: indexPath) as! CollectionViewCell
-                    let cell2 = collectionView.cellForItem(at: self.selectedIndex!) as! CollectionViewCell
-                    cell1.remove()
-                    cell2.remove()
-                    cardCounter += 2
-                    if (cardCounter == getCardNumbers) {
-                        allertGameDone()
-                        stopTimer()
-                    }
-              //  })
-            } else
-                {// if cellidendendefier is different
+                let cell1 = collectionView.cellForItem(at: indexPath) as! CollectionViewCell
+                let cell2 = collectionView.cellForItem(at: self.selectedIndex!) as! CollectionViewCell
+                cell1.remove()
+                cell2.remove()
+                cardCounter += 2
+                if (cardCounter == getCardNumbers) {
+                    //allertGameDone()
+                    stopTimer()
+                }
+            } else {   // if cellidendendefier is different
                 let cell1 = collectionView.cellForItem(at: indexPath) as! CollectionViewCell
                 cell1.flip(picture: self.cartonImages[(indexPath.row)])
-              //  DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1), execute: {
-                    let cell2 = collectionView.cellForItem(at: self.selectedIndex!) as! CollectionViewCell
-                    cell1.flipDown(picture: UIImage (named: "background2")!)
-                    cell2.flipDown(picture: UIImage (named: "background2")!)
-                    //                self.selectedIndex = nil
-              //  })
-
+                let cell2 = collectionView.cellForItem(at: self.selectedIndex!) as! CollectionViewCell
+                cell1.flipDown(picture: UIImage (named: "background2")!)
+                cell2.flipDown(picture: UIImage (named: "background2")!)
             }
-                self.selectedIndex = nil
+            self.selectedIndex = nil
         }
-
+        
     }
     
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        let screenWidth = collectionView.frame.width
-//        let screenHeight = collectionView.frame.height
-//        //cellForRowAndCollomn - count of cards
-//        // cellsAmount - 2 numbers colum and row
-//        // cellsAmount - create tuple
-////        let cellCounter = getCardNumbers[cellsAmount]
-////        return CGSize(width: screenWidth/CGFloat(cellCounter![0]) - 10, height: screenHeight/CGFloat(cellCounter![1]) - 10)
-//    }
-    
-    // for hiden status bar
+    //MARK: Pause game
+    func pause() {
+        if !(timer.isValid ) {
+            timer = Timer.scheduledTimer(timeInterval: 1 , target: self, selector: #selector(UpdateTimer), userInfo: nil, repeats: true)
+            self.collectionView.isUserInteractionEnabled = true
+        } else {
+            timer.invalidate()
+            self.collectionView.isUserInteractionEnabled = false
+        }
+    }
     
     // sharing
     @objc func shareResults(){
@@ -237,20 +184,22 @@ class FlipCardsViewController: UIViewController, UICollectionViewDataSource, UIC
         return screenshot
     }
     
-    //FIXME:- Timer
+    //MARK: timer
     func runTimer() {
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: (#selector(UpdateTimer)), userInfo: nil, repeats: true)
     }
-    
-  @objc func UpdateTimer() {
+    @objc func UpdateTimer() {
         timerCounter += 1
     }
+    func stopTimer() -> Int {
+        timer.invalidate()
+        return timerCounter
+    }
     
-    // for reload game
-    func newGame() {
+    //MARK: Reload Game
+    func reloadGame() {
         shuffle()
         oddArrayOfImages()
-        
         flips = 0
         flipsCount.title = "Flip:\(flips)"
         timerCounter = 0
@@ -258,36 +207,56 @@ class FlipCardsViewController: UIViewController, UICollectionViewDataSource, UIC
         collectionView.reloadData()
         runTimer()
     }
-    //---- timer stops
-    func stopTimer() -> Int {
-        timer.invalidate()
-        return timerCounter
+    
+   
+   
+    //MARK: saving in DB
+    func saveResult(name:String)  {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
+        let context = appDelegate.persistentContainer.viewContext
+        let newResult = NSEntityDescription.insertNewObject(forEntityName: "Scores", into: context)
+        
+        newResult.setValue(segueData.userName, forKey: "name")
+        newResult.setValue(segueData.timer, forKey: "time")
+        newResult.setValue(segueData.level, forKey: "level")
+        newResult.setValue(segueData.flips, forKey: "flipcount")
     }
     
-    //--- allert
-    
-    func allertGameDone() {
-    let alert = UIAlertController(title: "Do you want save your score?", message: "It will be saved in records.", preferredStyle: .alert)
-    
-    alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
-    alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
-    self.present(alert, animated: true)
-       
+    //MARK: - alert
+    func showAllert() {
+        let alertController = UIAlertController(title: "Welcome ", message: "Please save your result:", preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "Save", style: .default, handler: {
+            alert -> Void in
+            let fNameField = alertController.textFields![0] as UITextField
+            if fNameField.text != "" {
+                segueData.userName = fNameField.text!
+                print(segueData.userName)
+            } else {
+                let errorAlert = UIAlertController(title: "Error", message: "Please input both a first AND last name", preferredStyle: .alert)
+                errorAlert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: {
+                    alert -> Void in
+                    self.present(alertController, animated: true, completion: nil)
+                }))
+                self.present(errorAlert, animated: true, completion: nil)
+            }
+        }))
+        alertController.addTextField(configurationHandler: { (textField) -> Void in
+            textField.placeholder = "name"
+            textField.textAlignment = .center
+        })
+        
+        self.present(alertController, animated: true, completion: nil)
+        
     }
-//--send variables in recordscontroller
-    var segueData = (timer:0, flips:0, level:0, userName:"user")
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?){
-        //  as! FlipCardsViewController куди ми будемо передавати
-        // if  write destination.view - it innitsialization all variaebles in next controller
-        let recordsSegue = segue.destination as! RecordsViewController
-        //тут ми вказуємо що ми змінну з нашого контроллера передаємо в іншу змінну в наступному контороллері
-        recordsSegue.variablesForData = segueData as! (time: Int, flips: Int, level: Int, gamerName: String)
-    }
-    
-    
-    
-    override var prefersStatusBarHidden: Bool{
-        return true
-    }
-
 }
+
+//Mark: sending data in records
+var segueData = (timer:0, flips:0, level:0, userName:"user")
+func prepare(for segue: UIStoryboardSegue, sender: Any?){
+    let recordsSegue = segue.destination as! RecordsViewController
+    recordsSegue.variablesForData = segueData as! (time: Int, flips: Int, level: Int, gamerName: String)
+}
+var prefersStatusBarHidden: Bool{
+    return true
+}
+
